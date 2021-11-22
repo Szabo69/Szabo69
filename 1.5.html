@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Circle-Code</title>
+</head>
+<body bgcolor="black">
+
+    <a href="1.2.html">
+        <button>Back to Source Codes</button>
+      </a>
+
+<p style="color:cyan">
+import turtle as t <br>
+import os <br> <br>
+
+# Score varibales <br> <br>
+
+player_a_score = 0 <br>
+player_b_score = 0 <br>
+
+win = t.Screen()    # creating a window <br>
+win.title("Ping-Pong Game") # Giving name to the game. <br>
+win.bgcolor('cyan')    # providing color to the HomeScreen <br>
+win.setup(width=800,height=600) # Size of the game panel  <br>
+win.tracer(0)   # which speed up's the game. <br> <br>
+
+# Creating left paddle for the game <br> <br>
+
+paddle_left = t.Turtle() <br>
+paddle_left.speed(0) <br>
+paddle_left.shape('square') <br>
+paddle_left.color('black') <br>
+paddle_left.shapesize(stretch_wid=5,stretch_len=1) <br>
+paddle_left.penup() <br>
+paddle_left.goto(-350,0) <br> <br>
+
+# Creating a right paddle for the game <br>
+<br>
+paddle_right = t.Turtle() <br>
+paddle_right.speed(0) <br>
+paddle_right.shape('square') <br>
+paddle_right.shapesize(stretch_wid=5,stretch_len=1) <br>
+paddle_right.color('black') <br>
+paddle_right.penup() <br>
+paddle_right.goto(350,0) <br> <br>
+
+# Creating a pong ball for the game <br> <br>
+
+ball = t.Turtle() <br>
+ball.speed(0) <br>
+ball.shape('circle') <br>
+ball.color('black') <br>
+ball.penup() <br>
+ball.goto(0,0) <br>
+ball_dx = 0.2   # Setting up the pixels for the ball movement. <br>
+ball_dy = 0.2 <br> <br>
+
+# Creating a pen for updating the Score <br> <br>
+
+pen = t.Turtle() <br>
+pen.speed(0) <br>
+pen.color('Black') <br>
+pen.penup() <br>
+pen.hideturtle() <br>
+pen.goto(0,260) <br>
+pen.write("Player A: 0  <br>                   Player B: 0 ",align="center",font=('Monaco',24,"normal")) <br> <br>
+
+
+# Moving the left Paddle using the keyboard <br> <br>
+
+def paddle_left_up(): <br>
+    y = paddle_left.ycor() <br>
+    y = y + 40 <br>
+    paddle_left.sety(y) <br> <br>
+
+# Moving the left paddle down <br> <br>
+
+def paddle_left_down(): <br>
+    y = paddle_left.ycor() <br>
+    y = y - 40 <br>
+    paddle_left.sety(y) <br> <br>
+
+# Moving the right paddle up <br> <br>
+
+def paddle_right_up(): <br>
+    y = paddle_right.ycor() <br>
+    y = y + 40 <br>
+    paddle_right.sety(y) <br> <br>
+
+# Moving right paddle down <br> <br>
+
+def paddle_right_down(): <br>
+    y = paddle_right.ycor() <br>
+    y = y - 40 <br>
+    paddle_right.sety(y) <br> <br>
+
+# Keyboard binding <br> <br>
+
+win.listen() <br>
+win.onkeypress(paddle_left_up,"w") <br>
+win.onkeypress(paddle_left_down,"s") <br>
+win.onkeypress(paddle_right_up,"Up") <br>
+win.onkeypress(paddle_right_down,"Down") <br> <br>
+
+
+
+
+# Main Game Loop <br> <br>
+
+while True: <br>
+    win.update() # This methods is mandatory to run any game <br> <br>
+
+    # Moving the ball <br>
+    ball.setx(ball.xcor() + ball_dx) <br>
+    ball.sety(ball.ycor() + ball_dy) <br> <br>
+
+    # setting up the border <br> <br>
+
+    if ball.ycor() > 290:   # Right top paddle Border <br>
+        ball.sety(290) <br>
+        ball_dy = ball_dy * -1 <br> <br>
+
+
+    if ball.ycor() < -290:  # Left top paddle Border <br>
+        ball.sety(-290) <br>
+        ball_dy = ball_dy * -1 <br> <br>
+
+
+    if ball.xcor() > 390:   # right width paddle Border <br>
+        ball.goto(0,0) <br>
+        ball_dx = ball_dx * -1 <br>
+        player_a_score = player_a_score + 1 <br>
+        pen.clear() <br>
+        pen.write("Player A: {}            <br>         Player B: {} ".format(player_a_score,player_b_score),align="center",font=('Monaco',24,"normal")) <br>
+        os.system("afplay wallhit.wav&") <br> <br>
+
+
+
+    if(ball.xcor()) < -390: # Left width paddle Border <br>
+        ball.goto(0,0) <br>
+        ball_dx = ball_dx * -1 <br>
+        player_b_score = player_b_score + 1 <br>
+        pen.clear() <br>
+        pen.write("Player A: {}                <br>     Player B: {} ".format(player_a_score,player_b_score),align="center",font=('Monaco',24,"normal")) <br>
+        os.system("afplay wallhit.wav&") <br>
+
+
+    # Handling the collisions with paddles. <br> <br>
+
+    if(ball.xcor() > 340) and (ball.xcor() < 350) and (ball.ycor() < paddle_right.ycor() + 40 and ball.ycor() > paddle_right.ycor() - 40): <br>
+        ball.setx(340) <br>
+        ball_dx = ball_dx * -1 <br>
+        os.system("afplay paddle.wav&") <br>
+
+    if(ball.xcor() < -340) and (ball.xcor() > -350) and (ball.ycor() < p paddle_left.ycor() + 40 and ball.ycor() > paddle_left.ycor() - 40): <br>
+        ball.setx(-340) <br>
+        ball_dx = ball_dx * -1 <br>
+        os.system("afplay paddle.wav&") <br>
+</p> <br>
+
+
+
+</body>
+</html>

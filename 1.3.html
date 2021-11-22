@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game-Code</title>
+</head>
+<body bgcolor="black">
+
+    <a href="1.2.html">
+        <button>Back to Source Codes</button>
+      </a>
+      
+ <p style="color:cyan;">import turtle <br>
+    import random <br> <br>
+    
+    w = 500 <br>
+    h = 500 <br>
+    food_size = 15 <br> 
+    delay = 100 <br> <br>
+     
+    offsets = { <br>
+        "up": (0, 20), <br> 
+        "down": (0, -20), <br> 
+        "left": (-20, 0), <br>
+        "right": (20, 0) <br>
+    } <br> <br>
+     
+    def reset(): <br>
+        global snake, snake_dir, food_position, pen <br>
+        snake = [[0, 0], [0, 20], [0, 40], [0, 60], [0, 80]] <br>
+        snake_dir = "up" <br>
+        food_position = get_random_food_position() <br>
+        food.goto(food_position) <br>
+        move_snake() <br> <br>
+         
+    def move_snake(): <br> 
+        global snake_dir <br>  <br> 
+     
+        new_head = snake[-1].copy() <br> 
+        new_head[0] = snake[-1][0] + offsets[snake_dir][0] <br> 
+        new_head[1] = snake[-1][1] + offsets[snake_dir][1] <br>  <br> 
+     
+         
+        if new_head in snake[:-1]: <br> 
+            reset() <br> 
+        else: <br> 
+            snake.append(new_head) <br>  <br> 
+     
+         
+            if not food_collision(): <br> 
+                snake.pop(0) <br>  <br> 
+     
+     
+            if snake[-1][0] > w / 2: <br> 
+                snake[-1][0] -= w <br> 
+            elif snake[-1][0] < - w / 2: <br> 
+                snake[-1][0] += w <br> 
+            elif snake[-1][1] > h / 2: <br> 
+                snake[-1][1] -= h <br> 
+            elif snake[-1][1] < -h / 2: <br> 
+                snake[-1][1] += h <br>  <br>  <br> 
+     
+     
+            pen.clearstamps() <br>  <br>  <br> 
+     
+             
+            for segment in snake: <br> 
+                pen.goto(segment[0], segment[1]) <br> 
+                pen.stamp() <br>  <br> 
+     
+             
+            screen.update() <br>  <br> 
+     
+            turtle.ontimer(move_snake, delay) <br>  <br> 
+     
+    def food_collision(): <br> 
+        global food_position <br> 
+        if get_distance(snake[-1], food_position) < 20: <br> 
+            food_position = get_random_food_position() <br> 
+            food.goto(food_position) <br> 
+            return True <br> 
+        return False <br>  <br> 
+     
+    def get_random_food_position(): <br> 
+        x = random.randint(- w / 2 + food_size, w / 2 - food_size) <br> 
+        y = random.randint(- h / 2 + food_size, h / 2 - food_size) <br> 
+        return (x, y) <br>  <br> 
+     
+    def get_distance(pos1, pos2): <br> 
+        x1, y1 = pos1 <br> 
+        x2, y2 = pos2 <br> 
+        distance = ((y2 - y1) ** 2 + (x2 - x1) ** 2) ** 0.5 <br> 
+        return distance <br> 
+    def go_up(): <br> 
+        global snake_dir <br> 
+        if snake_dir != "down": <br> 
+            snake_dir = "up" <br>  <br> 
+     
+    def go_right(): <br> 
+        global snake_dir
+        if snake_dir != "left": <br> 
+            snake_dir = "right" <br>  <br> 
+     
+    def go_down(): <br> 
+        global snake_dir <br> 
+        if snake_dir!= "up": <br> 
+            snake_dir = "down" <br>  <br> 
+     
+    def go_left(): <br> 
+        global snake_dir <br> 
+        if snake_dir != "right": <br> 
+            snake_dir = "left" <br>  <br>  <br> 
+    
+       
+            
+     
+     
+    screen = turtle.Screen() <br> 
+    screen.setup(w, h) <br> 
+    screen.title("Snake") <br> 
+    screen.bgcolor("#53d7ff") <br> 
+    screen.setup(500, 500) <br> 
+    screen.tracer(0) <br>  <br> 
+     
+     
+    pen = turtle.Turtle("square") <br> 
+    pen.penup() <br>  <br> 
+     
+     
+    food = turtle.Turtle() <br> 
+    food.shape("circle") <br> 
+    food.color("Black") <br> 
+    food.shapesize(food_size / 20) <br> 
+    food.penup() <br>  <br> 
+     
+     
+    screen.listen() <br> 
+    screen.onkey(go_up, "Up") <br> 
+    screen.onkey(go_right, "Right") <br> 
+    screen.onkey(go_down, "Down") <br> 
+    screen.onkey(go_left, "Left") <br>  <br> 
+     
+     
+    reset() <br> 
+    turtle.done()  <br>  </p> 
+
+
+</body>
+</html>

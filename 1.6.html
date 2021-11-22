@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Circle-Code</title>
+</head>
+<body bgcolor="black">
+<p style="color:cyan">
+
+    <a href="1.2.html">
+        <button>Back to Source Codes</button>
+      </a> <br><br>
+
+    #Tic Tac Toe game in python by techwithtim <br> <br>
+
+    board = [' ' for x in range(10)] <br> <br>
+    
+    def insertLetter(letter, pos): <br>
+        board[pos] = letter <br> <br>
+    
+    def spaceIsFree(pos): <br>
+        return board[pos] == ' ' <br> <br>
+    
+    def printBoard(board): <br>
+        print('   |   |') <br>
+        print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3]) <br>
+        print('   |   |') <br>
+        print('-----------') <br>
+        print('   |   |') <br>
+        print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6]) <br>
+        print('   |   |') <br>
+        print('-----------') <br>
+        print('   |   |') <br>
+        print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9]) <br>
+        print('   |   |') <br> <br>
+        
+    def isWinner(bo, le): <br> 
+        return (bo[7] == le and bo[8] == le and bo[9] == le) or (bo[4] == le and bo[5] == le and bo[6] == le) or(bo[1] == le and bo[2] == le and bo[3] == le) or(bo[1] == le and bo[4] == le and bo[7] == le) or(bo[2] == le and bo[5] == le and bo[8] == le) or(bo[3] == le and bo[6] == le and bo[9] == le) or(bo[1] == le and bo[5] == le and bo[9] == le) or(bo[3] == le and bo[5] == le and bo[7] == le) <br> <br>
+    
+    def playerMove(): <br>
+        run = True <br>
+        while run: <br>
+            move = input('Please select a position to place an \'X\' (1-9): ') <br>
+            try: <br>
+                move = int(move) <br>
+                if move > 0 and move < 10: <br>
+                    if spaceIsFree(move): <br>
+                        run = False <br>
+                        insertLetter('X', move) <br>
+                    else: <br>
+                        print('Sorry, this space is occupied!') <br>
+                else: <br>
+                    print('Please type a number within the range!') <br>
+            except: <br>
+                print('Please type a number!') <br> <br>
+                
+    
+    def compMove(): <br>
+        possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0] <br>
+        move = 0 <br> <br>
+    
+        for let in ['O', 'X']: <br>
+            for i in possibleMoves: <br>
+                boardCopy = board[:] <br>
+                boardCopy[i] = let <br>
+                if isWinner(boardCopy, let): <br>
+                    move = i <br>
+                    return move <br> <br>
+    
+        cornersOpen = [] <br>
+        for i in possibleMoves: <br>
+            if i in [1,3,7,9]: <br>
+                cornersOpen.append(i) <br> <br>
+                
+        if len(cornersOpen) > 0: <br>
+            move = selectRandom(cornersOpen) <br>
+            return move <br> <br>
+    
+        if 5 in possibleMoves: <br>
+            move = 5 <br>
+            return move <br> <br>
+    
+        edgesOpen = [] <br>
+        for i in possibleMoves: <br>
+            if i in [2,4,6,8]: <br>
+                edgesOpen.append(i) <br> <br>
+                
+        if len(edgesOpen) > 0: <br>
+            move = selectRandom(edgesOpen) <br> <br>
+            
+        return move <br> <br>
+    
+    def selectRandom(li): <br>
+        import random <br>
+        ln = len(li) <br>
+        r = random.randrange(0,ln) <br>
+        return li[r] <br> <br>
+        
+    
+    def isBoardFull(board): <br>
+        if board.count(' ') > 1: <br>
+            return False <br>
+        else: <br>
+            return True <br> <br>
+    
+    def main(): <br>
+        print('Welcome to Tic Tac Toe!') <br>
+        printBoard(board) <br> <br>
+    
+        while not(isBoardFull(board)): <br>
+            if not(isWinner(board, 'O')): <br>
+                playerMove() <br>
+                printBoard(board) <br>
+            else: <br>
+                print('Sorry, O\'s won this time!') <br>
+                break <br> <br>
+    
+            if not(isWinner(board, 'X')): <br>
+                move = compMove() <br>
+                if move == 0: <br>
+                    print('Tie Game!') <br>
+                else: <br>
+                    insertLetter('O', move) <br>
+                    print('Computer placed an \'O\' in position', move , ':') <br>
+                    printBoard(board) <br>
+            else: <br>
+                print('X\'s won this time! Good Job!') <br>
+                break <br> <br>
+    
+        if isBoardFull(board): <br>
+            print('Tie Game!') <br> <br>
+    
+    while True: <br>
+        answer = input('Do you want to play again? (Y/N)') <br>
+        if answer.lower() == 'y' or answer.lower == 'yes': <br>
+            board = [' ' for x in range(10)] <br>
+            print('-----------------------------------') <br>
+            main() <br>
+        else: <br>
+            break <br> <br>
+    </p>
+
+
+
+</body>
+</html>
